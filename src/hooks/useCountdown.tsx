@@ -14,14 +14,14 @@ export const useCountdown = ({ time }: { time: number }) => {
     if (!isRunning) return;
 
     const interval = setInterval(() => {
-      setTimeLeft(timeLeft - 1);
+      setTimeLeft((prev) => prev - 1);
       setTimeLeftStorage({ key: "timeLeft", value: timeLeft - 1 });
     }, 1000);
 
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [timeLeftStorage, isRunning, setTimeLeftStorage, timeLeft]);
+  }, [isRunning, setTimeLeftStorage, timeLeft]);
 
   return {
     timeLeft: formatSecondsToHMS(timeLeft),

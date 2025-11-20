@@ -56,7 +56,6 @@ export default function StudyWithMe() {
     });
     setActionPopoverOpen(false);
     countDownObject.setIsRunning(false);
-    console.log("time", data);
     countDownObject.setTimeLeft(
       (Number(data.hours) * 60 + Number(data.minutes)) * 60
     );

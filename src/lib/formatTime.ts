@@ -2,11 +2,10 @@ import { intervalToDuration } from "date-fns";
 
 export const formatSecondsToHMS = (seconds: number) => {
   const duration = intervalToDuration({ start: 0, end: seconds * 1000 });
-  console.log("duration", duration);
-  const hours =
-    Number(duration?.hours || 0) > 9
-      ? Number(duration?.hours || 0) + Number(duration?.days || 0) * 24
-      : `0${duration?.hours || 0}`;
+
+  const totalHours =
+    Number(duration?.hours || 0) + Number(duration?.days || 0) * 24;
+  const hours = totalHours > 9 ? totalHours : `0${totalHours}`;
   const minutes =
     Number(duration?.minutes || 0) > 9
       ? duration?.minutes

@@ -19,7 +19,7 @@ export const Timer = ({
     useLocalStorage<number>("timeLeft");
 
   useEffect(() => {
-    setTimeLeft(timeStorage || timeLeftStorage || 12 * 60 * 60);
+    setTimeLeft(timeLeftStorage || timeStorage || 12 * 60 * 60);
   }, [setTimeLeft, timeLeftStorage, timeStorage]);
 
   return (
