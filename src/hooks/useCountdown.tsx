@@ -7,19 +7,29 @@ export const useCountdown = ({ time }: { time: number }) => {
   const [timeLeft, setTimeLeft] = useState(time);
   const [isRunning, setIsRunning] = useState(false);
 
-  const { value: timeLeftStorage, setItem: setTimeLeftStorage } =
-    useLocalStorage<number>("timeLeft");
+  const {
+    value: storedTimeLeft,
+    setItem: setTimeLeftStorage,
+    isInitialized,
+  } = useLocalStorage<number>("timeLeft");
+
+  useEffect(() => {
+    if (isInitialized && storedTimeLeft !== undefined) {
+      setTimeLeft(storedTimeLeft);
+    }
+  }, [isInitialized, storedTimeLeft]);
 
   useEffect(() => {
     if (!isRunning) return;
 
     const interval = setInterval(() => {
-      setTimeLeft((prev) => prev - 1);
-      setTimeLeftStorage({ key: "timeLeft", value: timeLeft - 1 });
+      const next = timeLeft - 1;
+      setTimeLeft(next);
+      setTimeLeftStorage({ key: "timeLeft", value: next });
     }, 1000);
 
     return () => {
-      if (interval) clearInterval(interval);
+      clearInterval(interval);
     };
   }, [isRunning, setTimeLeftStorage, timeLeft]);
 

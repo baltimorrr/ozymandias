@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export const Timer = ({
   timeStorage,
@@ -18,8 +18,13 @@ export const Timer = ({
   const { value: timeLeftStorage, setItem: setTimeLeftStorage } =
     useLocalStorage<number>("timeLeft");
 
+  const hasInitialized = useRef(false);
+
   useEffect(() => {
+    if (hasInitialized.current) return;
+    if (timeLeftStorage === undefined && !timeStorage) return;
     setTimeLeft(timeLeftStorage || timeStorage || 12 * 60 * 60);
+    hasInitialized.current = true;
   }, [setTimeLeft, timeLeftStorage, timeStorage]);
 
   return (
@@ -43,6 +48,7 @@ export const Timer = ({
           variant="secondary"
           onClick={() => {
             setTimeLeftStorage({ key: "timeLeft", value: timeStorage });
+            setTimeLeft(timeStorage);
             setIsRunning(false);
           }}
         >
@@ -52,6 +58,7 @@ export const Timer = ({
         <Button
           onClick={() => {
             setTimeLeftStorage({ key: "timeLeft", value: timeStorage });
+            setTimeLeft(timeStorage);
             setIsRunning(false);
           }}
         >
