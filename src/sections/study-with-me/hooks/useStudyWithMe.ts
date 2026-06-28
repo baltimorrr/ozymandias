@@ -69,7 +69,7 @@ export const useStudyWithMe = () => {
 
   useEffect(() => {
     console.log("studyWithMe", countDownObject.timeLeft);
-    document.title = `${BASE_TITLE} | ${countDownObject?.timeLeft}`;
+    document.title = `${countDownObject?.timeLeft} | ${BASE_TITLE}`;
   }, [countDownObject.timeLeft]);
 
   return {
